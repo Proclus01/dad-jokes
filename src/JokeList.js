@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Joke from './Joke.js';
 import './JokeList.css';
 import axios from 'axios';
 
