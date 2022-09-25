@@ -33,13 +33,32 @@ class JokeList extends Component {
     }
 
     handleVote(id, delta) {
-
+        this.setState(
+            st => ({
+                // Check each joke if the id is the one we're looking for, 
+                // if it is, make a new object with joke info and update votes
+                // else just add the existing joke into the array
+                jokes: st.jokes.map(j => 
+                    j.id === id ? {...j, votes: j.votes + delta} : j
+                )
+            })
+        )
     }
 
     render() {
         const jokeList = this.state.jokes.map(
             j => (
-                <Joke votes={j.votes} text={j.text}/>
+                <Joke 
+                    key={j.id} 
+                    votes={j.votes} 
+                    text={j.text}
+                    upvote={
+                        () => this. handleVote(j.id, 1)
+                    }
+                    downvote={
+                        () => this.handleVote(j.id, -1)
+                    }
+                />
             )
         );
         
