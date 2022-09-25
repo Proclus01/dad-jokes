@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Joke from './Joke.js';
-import './JokeList.css';
+import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import './JokeList.css';
 
 class JokeList extends Component {
     static defaultProps = {
@@ -25,14 +26,14 @@ class JokeList extends Component {
                 headers: { Accept: "application/json" }
             });
 
-            jokes.push({text: res.data.joke, votes: 0 });
+            jokes.push({id: uuidv4(), text: res.data.joke, votes: 0 });
         }
 
         this.setState({ jokes: jokes });
     }
 
     handleVote(id, delta) {
-        
+
     }
 
     render() {
