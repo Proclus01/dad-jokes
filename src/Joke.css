@@ -15,6 +15,15 @@
     margin-right: 1rem;
 }
 
+.Joke-smiley {
+    font-size: 3rem;
+    margin-left: auto;
+    border-radius: 50%;
+    box-shadow: 
+    0 19px 38px rgba(0, 0, 0, 0.3),
+    0 15px 12px rgba(0, 0, 0, 0.1);
+}
+
 .Joke-text {
     width: 75%;
     font-size: 1.2rem;
