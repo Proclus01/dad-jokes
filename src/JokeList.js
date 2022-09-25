@@ -53,7 +53,7 @@ class JokeList extends Component {
                     votes={j.votes} 
                     text={j.text}
                     upvote={
-                        () => this. handleVote(j.id, 1)
+                        () => this.handleVote(j.id, 1)
                     }
                     downvote={
                         () => this.handleVote(j.id, -1)
