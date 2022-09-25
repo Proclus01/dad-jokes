@@ -29,10 +29,19 @@ class JokeList extends Component {
         this.setState({ jokes: jokes });
     }
 
-    render() {     
+    render() {
+        const jokeList = this.state.jokes.map(
+            j => (
+                <div>{j}</div>
+            )
+        );
+        
         return(
-            <div>
+            <div className="JokeList">
                 <h1>Dad Jokes</h1>
+                <div className="JokeList-jokes">
+                    {jokeList}
+                </div>
             </div>
         )
     }
