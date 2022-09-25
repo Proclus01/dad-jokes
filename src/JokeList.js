@@ -25,7 +25,7 @@ class JokeList extends Component {
                 headers: { Accept: "application/json" }
             });
 
-            jokes.push({joke: res.data.joke, votes: 0 });
+            jokes.push({text: res.data.joke, votes: 0 });
         }
 
         this.setState({ jokes: jokes });
@@ -34,7 +34,7 @@ class JokeList extends Component {
     render() {
         const jokeList = this.state.jokes.map(
             j => (
-                <div>{j.joke} - {j.votes}</div>
+                <Joke votes={j.votes} text={j.text}/>
             )
         );
         
