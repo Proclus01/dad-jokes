@@ -27,39 +27,44 @@ class JokeList extends Component {
     }
 
     async getJokes() {
-        let jokes = [];
+        try {
+            let jokes = [];
 
-        while (jokes.length < this.props.numJokesToGet) {
-            // Load Jokes
-            let res = await axios.get("https://icanhazdadjoke.com/", {
-                headers: { Accept: "application/json" }
-            });
+            while (jokes.length < this.props.numJokesToGet) {
+                // Load Jokes
+                let res = await axios.get("https://icanhazdadjoke.com/", {
+                    headers: { Accept: "application/json" }
+                });
 
-            // Don't push duplicate jokes into the array
-            let newJoke = res.data.joke;
-            if (!this.seenJokes.has(newJoke)) {
-                jokes.push({id: uuidv4(), text: res.data.joke, votes: 0 });
-            } else {
-                console.log("Found a duplicate!");
-                console.log(newJoke);
+                // Don't push duplicate jokes into the array
+                let newJoke = res.data.joke;
+                if (!this.seenJokes.has(newJoke)) {
+                    jokes.push({id: uuidv4(), text: res.data.joke, votes: 0 });
+                } else {
+                    console.log("Found a duplicate!");
+                    console.log(newJoke);
+                }
+                
             }
-            
+
+            this.setState(
+                st => ({
+                    loading: false,
+                    jokes: [...st.jokes, ...jokes]
+                }),
+                // Wait until state is updated and save the entire state to local storage
+                () => window.localStorage.setItem("jokes", JSON.stringify(this.state.jokes))
+            );
+
+            // Store jokes in our local storage
+            window.localStorage.setItem(
+                "jokes",
+                JSON.stringify(jokes)
+            );
+            } catch(e) {
+                alert(e);
+                this.setState({loading: false});
         }
-
-        this.setState(
-            st => ({
-                loading: false,
-                jokes: [...st.jokes, ...jokes]
-            }),
-            // Wait until state is updated and save the entire state to local storage
-            () => window.localStorage.setItem("jokes", JSON.stringify(this.state.jokes))
-        );
-
-        // Store jokes in our local storage
-        window.localStorage.setItem(
-            "jokes",
-            JSON.stringify(jokes)
-        );
     }
 
     handleVote(id, delta) {
