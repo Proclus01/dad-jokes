@@ -15,6 +15,8 @@ class JokeList extends Component {
             jokes: JSON.parse(window.localStorage.getItem("jokes") || "[]"),
             loading: false
         }
+        // This set contains joke text and is used to prevent duplication in render
+        this.seenJokes = new Set(this.state.jokes.map(j => j.text));
         this.handleClick = this.handleClick.bind(this);
     }
 
@@ -33,7 +35,15 @@ class JokeList extends Component {
                 headers: { Accept: "application/json" }
             });
 
-            jokes.push({id: uuidv4(), text: res.data.joke, votes: 0 });
+            // Don't push duplicate jokes into the array
+            let newJoke = res.data.joke;
+            if (!this.seenJokes.has(newJoke)) {
+                jokes.push({id: uuidv4(), text: res.data.joke, votes: 0 });
+            } else {
+                console.log("Found a duplicate!");
+                console.log(newJoke);
+            }
+            
         }
 
         this.setState(
