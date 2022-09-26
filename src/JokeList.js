@@ -96,7 +96,11 @@ class JokeList extends Component {
             )
         }
 
-        const jokeList = this.state.jokes.map(
+        let sortedJokes = this.state.jokes.sort(
+            (a, b) => b.votes - a.votes
+        );
+
+        const jokeList = sortedJokes.map(
             j => (
                 <Joke 
                     key={j.id} 
