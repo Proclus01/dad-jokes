@@ -30,6 +30,11 @@
     z-index: 2;
 }
 
+.JokeList-spinner {
+    color: white;
+    text-align: center;
+}
+
 .JokeList-title {
     font-size: 4rem;
     margin: 2rem;

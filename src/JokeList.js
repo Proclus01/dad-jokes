@@ -12,7 +12,8 @@ class JokeList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            jokes: JSON.parse(window.localStorage.getItem("jokes") || "[]")
+            jokes: JSON.parse(window.localStorage.getItem("jokes") || "[]"),
+            loading: false
         }
         this.handleClick = this.handleClick.bind(this);
     }
@@ -37,6 +38,7 @@ class JokeList extends Component {
 
         this.setState(
             st => ({
+                loading: false,
                 jokes: [...st.jokes, ...jokes]
             }),
             // Wait until state is updated and save the entire state to local storage
@@ -52,7 +54,7 @@ class JokeList extends Component {
 
     handleVote(id, delta) {
         this.setState(
-            st => ({
+            st => ({                
                 // Check each joke if the id is the one we're looking for, 
                 // if it is, make a new object with joke info and update votes
                 // else just add the existing joke into the array
@@ -65,10 +67,20 @@ class JokeList extends Component {
     }
 
     handleClick() {
-        this.getJokes();
+        this.setState({loading: true}, this.getJokes);
     }
 
     render() {
+
+        if (this.state.loading) {
+            return (
+                <div className="JokeList-spinner">
+                    <i className="far fa-8x fa-laugh fa-spin" />
+                    <h1 className="JokeList-title">Loading...</h1>
+                </div>
+            )
+        }
+
         const jokeList = this.state.jokes.map(
             j => (
                 <Joke 
